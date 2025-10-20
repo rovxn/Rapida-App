@@ -124,10 +124,8 @@ To create a clean and intuitive online food ordering interface that demonstrates
 
 ## 👨‍💻 Author
 
-**Rovan Thomas John**
-**Full Stack Developer**
-**📍 Kerala, India**
-**🌐 [GitHub](https://github.com/rovxn)**
+[Rovan Thomas John](https://github.com/rovxn) -
+FullStack Developer
 
 ---
 
