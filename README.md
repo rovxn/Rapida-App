@@ -1,16 +1,139 @@
-# React + Vite
+<h1 align="center">🍕 Rapida – Food Ordering Website</h1>
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+<p align="center">
+  <b>Fast. Simple. Delicious.</b><br>
+  A modern and responsive food ordering platform built with Vite, React, and Tailwind CSS.
+</p>
 
-Currently, two official plugins are available:
+<p align="center">
+  <a href="https://react.dev/"><img src="https://img.shields.io/badge/Made%20with-React-61DAFB?logo=react&logoColor=white" /></a>
+  <a href="https://vitejs.dev/"><img src="https://img.shields.io/badge/Built%20with-Vite-646CFF?logo=vite&logoColor=white" /></a>
+  <a href="https://tailwindcss.com/"><img src="https://img.shields.io/badge/Styled%20with-Tailwind%20CSS-38B2AC?logo=tailwindcss&logoColor=white" /></a>
+  <a href="https://pages.cloudflare.com/"><img src="https://img.shields.io/badge/Deployed%20on-Cloudflare%20Pages-F38020?logo=cloudflare&logoColor=white" /></a>
+</p>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Overview
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+**Rapida** is a sleek, high-performance food ordering website designed for an effortless browsing and checkout experience.  
+Built entirely with modern frontend tools, it emphasizes fast loading, smooth navigation, and a responsive layout.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🎯 Purpose
+
+To create a clean and intuitive online food ordering interface that demonstrates strong React component design, Tailwind CSS styling, and user-focused UI/UX principles.
+
+---
+
+## 👥 Intended Users
+
+- 🧑‍🍳 **Customers:** Browse, search, and order food items.  
+- 🧑‍💼 **Administrators:** Manage menu items and handle product listings (frontend only).  
+- 🛍️ **Sellers (optional):** Add and manage their own items in the system.
+
+---
+
+## ✨ Features
+
+| Feature | Description |
+|----------|--------------|
+| 🏠 **Homepage** | Displays featured categories and popular dishes. |
+| 🍔 **Menu Page** | Lists all available items with images and descriptions. |
+| 🔍 **Search & Filter** | Find items by name or category quickly. |
+| 🛒 **Cart System** | Add, remove, and clear items from the cart. |
+| 💰 **Order Summary** | Displays selected items and total price. |
+| 🌗 **Dark/Light Mode** | Toggle between color schemes. |
+| 📱 **Responsive Design** | Fully optimized for mobile, tablet, and desktop. |
+| 🧾 **About & Contact Pages** | Static pages with project details and contact info. |
+
+---
+
+## 🧩 Tech Stack
+
+- ⚡ **Frontend Framework:** [React](https://react.dev/)
+- ⚙️ **Build Tool:** [Vite](https://vitejs.dev/)
+- 🎨 **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+- 🖼️ **Icons:** [Bootstrap Icons](https://icons.getbootstrap.com/)
+- ☁️ **Deployment:** [Cloudflare Pages](https://pages.cloudflare.com/)
+
+
+
+---
+
+## 🎨 UI/UX Design
+
+- **Design Philosophy:** Minimalist, fast, and accessible.  
+- **Color Scheme:**  
+  - 🌞 Light Mode → White background, blue & gray accents.  
+  - 🌙 Dark Mode → Dark background, light text.  
+- **Font:** [Roboto](https://fonts.google.com/specimen/Roboto) / [Open Sans](https://fonts.google.com/specimen/Open+Sans)
+
+---
+
+## 🧠 Development Roadmap
+
+**Week 1** – Setup project, homepage, and product catalog.  
+**Week 2** – Add responsiveness, product management, and error handling.  
+**Week 3** – Implement cart, dark/light mode, and testing.  
+**Week 4** – Final polish, documentation, and Cloudflare deployment.
+
+---
+
+## 🧪 Testing
+
+- ✅ Validate add/remove/clear cart functionality.  
+- ✅ Ensure responsiveness on all devices.  
+- ✅ Test navigation links and mode toggle.  
+- ✅ Confirm order summary accuracy.
+
+---
+
+## ⚙️ Dependencies
+
+
+{
+  "react": "^18.x",
+  "react-dom": "^18.x",
+  "vite": "^5.x",
+  "tailwindcss": "^3.x",
+  "postcss": "^8.x",
+  "autoprefixer": "^10.x",
+  "bootstrap-icons": "^1.x"
+}
+
+
+---
+
+## 📋 Requirements Summary (SRS)
+
+| ID   | Description              | Functional Requirement | Test Criteria               |
+| ---- | ------------------------ | ---------------------- | --------------------------- |
+| BR-1 | Homepage with categories | FR-1                   | Homepage loads correctly    |
+| BR-2 | Browse menu              | FR-2                   | Menu displays items         |
+| BR-3 | Search/filter            | FR-3, FR-4             | Correct results displayed   |
+| BR-4 | Add/view cart            | FR-5, FR-6, FR-7       | Cart updates dynamically    |
+| BR-5 | Checkout                 | FR-8, FR-9             | Order summary visible       |
+| BR-7 | Responsive + dark mode   | FR-10, FR-11           | Works on all devices        |
+| BR-8 | Static pages             | FR-12, FR-13           | Info pages display properly |
+
+---
+
+
+
+## 👨‍💻 Author
+
+**Rovan Thomas John**
+Frontend Developer | MITS Media Club
+📍 Kerala, India
+🌐 [GitHub](https://github.com/rovxn)
+
+---
+
+<p align="center">
+  <b>“Fast. Simple. Delicious. That’s Rapida.”</b> 🍴
+</p>
+
+
+---
