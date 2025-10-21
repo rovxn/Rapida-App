@@ -68,7 +68,7 @@ To create a clean and intuitive online food ordering interface that demonstrates
 - **Color Scheme:**  
   - 🌞 Light Mode → White background, blue & gray accents.  
   - 🌙 Dark Mode → Dark background, light text.  
-- **Font:** [Roboto](https://fonts.google.com/specimen/Roboto) / [Open Sans](https://fonts.google.com/specimen/Open+Sans)
+- **Font:** Poppins / Quicksand
 
 ---
 
@@ -90,21 +90,6 @@ To create a clean and intuitive online food ordering interface that demonstrates
 
 ---
 
-## ⚙️ Dependencies
-
-
-{
-  "react": "^18.x",
-  "react-dom": "^18.x",
-  "vite": "^5.x",
-  "tailwindcss": "^3.x",
-  "postcss": "^8.x",
-  "autoprefixer": "^10.x",
-  "bootstrap-icons": "^1.x"
-}
-
-
----
 
 ## 📋 Requirements Summary (SRS)
 
