@@ -16,19 +16,21 @@ export default function Admin() {
     setForm({ name: '', price: '', category: '' });
   };
 
+  // Updated inputStyle with a neutral focus ring
   const inputStyle =
-    'font-poppins bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 transition-shadow w-full';
+    'font-poppins bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 dark:focus:ring-white transition-shadow w-full';
 
   return (
-    <section className="py-16 md:py-24">
+    // Added standard page background
+    <section className="bg-white dark:bg-gray-900 py-16 md:py-24">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-extrabold text-gray-900 dark:text-white tracking-tight mb-8">
+        <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 dark:text-gray-100 tracking-tight font-poppins text-center mb-16">
           Admin Dashboard
         </h2>
 
         {/* Add Product Form - Styled like a domain card */}
-        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm overflow-hidden mb-8">
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white p-6 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700">
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg overflow-hidden mb-12">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white p-6 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 font-poppins">
             Add New Product
           </h3>
           <div className="p-6">
@@ -52,9 +54,13 @@ export default function Admin() {
                 value={form.category}
                 onChange={e => setForm({ ...form, category: e.target.value })}
               />
+              {/* Updated Button to be neutral */}
               <button
                 onClick={handleAdd}
-                className="bg-yellow-600 text-white px-5 py-3 rounded-lg font-poppins font-medium hover:bg-yellow-700 transition-colors w-full"
+                className="bg-gray-900 text-white px-5 py-3 rounded-lg font-poppins font-semibold 
+                           hover:bg-gray-700 shadow-md 
+                           dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200 
+                           transition-all duration-300 w-full"
               >
                 Add Product
               </button>
@@ -63,8 +69,8 @@ export default function Admin() {
         </div>
 
         {/* Manage Products List */}
-        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-sm overflow-hidden">
-          <h3 className="text-xl font-bold text-gray-900 dark:text-white p-6 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700">
+        <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg overflow-hidden">
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white p-6 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 font-poppins">
             Manage Existing Products
           </h3>
           <ul className="divide-y divide-gray-200 dark:divide-gray-700">
@@ -82,11 +88,12 @@ export default function Admin() {
                     — ₹{p.price} ({p.category})
                   </span>
                 </div>
+                {/* Updated "Delete" to "Remove" and made it neutral */}
                 <button
                   onClick={() => dispatch(deleteProduct(p.id))}
-                  className="font-poppins text-sm font-semibold text-red-600 hover:text-red-800 transition-colors"
+                  className="font-poppins text-sm font-semibold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
                 >
-                  Delete
+                  Remove
                 </button>
               </li>
             ))}
