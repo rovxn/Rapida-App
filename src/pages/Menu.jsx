@@ -48,6 +48,8 @@ export default function Menu() {
             <option>Burger</option>
             <option>Pasta</option>
             <option>Salad</option>
+            <option>Sides</option>
+            <option>Drink</option>
           </select>
         </div>
 
