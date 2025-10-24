@@ -64,6 +64,9 @@ export default function Navbar() {
     { to: '/menu', label: 'Menu' },
     { to: '/cart', label: 'Cart' },
     { to: '/admin', label: 'Admin' },
+    { to: '/contact', label: 'Contact' },
+    { to: '/about', label: 'About' },
+
   ];
 
   // Helper component for the Cart link content
@@ -171,6 +174,7 @@ export default function Navbar() {
                 <div className="text-center">{link.label}</div>
               )}
             </Link>
+            
           ))}
         </div>
       </div>

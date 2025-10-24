@@ -6,6 +6,9 @@ import Menu from './pages/Menu';
 import Admin from './pages/Admin';
 import Cart from './pages/Cart';
 import Checkout from './pages/CheckOut';
+import NotFound from './pages/NotFound';
+import Contact from './pages/Contact';
+import About from './pages/About';
 
 export default function App() {
   return (
@@ -19,6 +22,9 @@ export default function App() {
             <Route path="/cart" element={<Cart />} />
             <Route path="/checkout" element={<Checkout />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="*" element={<NotFound />} />
+            <Route path="/contact" element={<Contact />} />
+            <Route path="/about" element={<About />} />
           </Routes>
         </main>
         <Footer />
