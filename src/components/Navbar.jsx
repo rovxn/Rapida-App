@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { logout } from '../store/authSlice';
 import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { useState, useEffect } from 'react';
 
 // --- SVG Icons for the theme ---
-// (Assuming these are in the same file or imported)
 
 // Sun icon for Light Mode
 const IconSun = () => (
@@ -35,57 +35,51 @@ const IconClose = () => (
 // --- End of SVG Icons ---
 
 export default function Navbar() {
-  // --- FIX ---
-  // Use .reduce() to sum the 'quantity' of each item, starting from 0.
+  const dispatch = useDispatch();
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
+  // Use .reduce() to get the total item count
   const totalItemCount = useSelector((state) =>
     state.cart.items.reduce((total, item) => total + item.quantity, 0)
   );
-  // --- END FIX ---
-
-  const [open, setOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
+  const [open, setOpen] = useState(false);
 
-  // Effect for setting dark mode preference
   useEffect(() => {
+    // Set initial state from localStorage or system preference
     const savedMode = JSON.parse(localStorage.getItem('darkMode'));
     const systemPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
     setDarkMode(savedMode !== null ? savedMode : systemPrefersDark);
   }, []);
 
-  // Effect for applying dark mode and saving to localStorage
   useEffect(() => {
+    // Apply dark mode to <html> and save to localStorage
     document.documentElement.classList.toggle('dark', darkMode);
     localStorage.setItem('darkMode', JSON.stringify(darkMode));
   }, [darkMode]);
 
-  // Reusable nav link array
   const navLinks = [
     { to: '/', label: 'Home' },
     { to: '/menu', label: 'Menu' },
     { to: '/cart', label: 'Cart' },
-    { to: '/admin', label: 'Admin' },
-    { to: '/contact', label: 'Contact' },
     { to: '/about', label: 'About' },
-
+    { to: '/contact', label: 'Contact' },
   ];
 
-  // Helper component for the Cart link content
+  // Helper for Cart Link content
   const CartLinkContent = () => (
     <div className="flex items-center gap-1.5">
       Cart
-      {/* Use totalItemCount */}
       {totalItemCount > 0 && (
-        <span 
-          className="flex items-center justify-center w-5 h-5 
-                     bg-gray-900 text-white text-xs 
-                     dark:bg-white dark:text-gray-900 
-                     font-bold rounded-full"
-        >
+        <span className="flex items-center justify-center w-5 h-5 bg-gray-900 text-white text-xs dark:bg-white dark:text-gray-900 font-bold rounded-full">
           {totalItemCount}
         </span>
       )}
     </div>
   );
+  
+  // Reusable themed link style
+  const themedLink = "relative group font-poppins font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300";
+  const underline = "absolute left-0 -bottom-1 h-0.5 bg-gray-900 dark:bg-white w-0 transition-all duration-300 group-hover:w-full";
 
   return (
     <nav className="bg-white dark:bg-gray-900 shadow-md fixed top-0 w-full z-50">
@@ -101,24 +95,48 @@ export default function Navbar() {
             Rapida
           </Link>
 
-          {/* Desktop Nav Links */}
-          <div className="hidden md:flex gap-8">
+          {/* Desktop Nav Links & Auth */}
+          <div className="hidden md:flex gap-6 items-center">
             {navLinks.map((link) => (
-              <Link
-                key={link.to}
-                to={link.to}
-                className="relative group font-poppins font-medium text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors duration-300"
-              >
+              <Link key={link.to} to={link.to} className={themedLink}>
                 {link.label === 'Cart' ? <CartLinkContent /> : link.label}
-                {/* Animated underline */}
-                <span className="absolute left-0 -bottom-1 h-0.5 bg-gray-900 dark:bg-white w-0 transition-all duration-300 group-hover:w-full"></span>
+                <span className={underline}></span>
               </Link>
             ))}
+
+            {/* Conditional Admin Link */}
+            {isAuthenticated && (
+              <Link to="/admin" className={themedLink}>
+                Admin
+                <span className={underline}></span>
+              </Link>
+            )}
+
+            {/* Auth Buttons */}
+            {isAuthenticated ? (
+              <>
+                <span className="font-poppins text-sm text-gray-600 dark:text-gray-300">
+                  Hi, {user?.name || 'User'}
+                </span>
+                <button
+                  onClick={() => dispatch(logout())}
+                  className="font-poppins text-sm font-semibold text-red-600 hover:text-red-800 dark:text-red-500 dark:hover:text-red-400 transition-colors"
+                >
+                  Logout
+                </button>
+              </>
+            ) : (
+              <Link
+                to="/login"
+                className="bg-gray-900 text-white px-4 py-1.5 rounded-md font-poppins text-sm font-semibold hover:bg-gray-700 dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200 transition-colors"
+              >
+                Login
+              </Link>
+            )}
           </div>
 
-          {/* Right-side Icons */}
+          {/* Right-side Icons (Dark Mode & Mobile Toggle) */}
           <div className="flex gap-4 items-center">
-            {/* Dark Mode Toggle */}
             <button
               onClick={() => setDarkMode(!darkMode)}
               className="text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 p-2 rounded-full transition-colors"
@@ -128,7 +146,6 @@ export default function Navbar() {
               {darkMode ? <IconSun /> : <IconMoon />}
             </button>
 
-            {/* Mobile Menu Toggle */}
             <button
               className="md:hidden text-gray-700 dark:text-gray-300"
               onClick={() => setOpen(!open)}
@@ -151,31 +168,44 @@ export default function Navbar() {
             <Link
               key={link.to}
               to={link.to}
-              className="font-poppins font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 w-full p-3 rounded-lg"
+              className="font-poppins font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 w-full p-3 rounded-lg text-center"
               onClick={() => setOpen(false)}
             >
-              {/* Special content for mobile cart link */}
-              {link.label === 'Cart' ? (
-                <div className="flex items-center justify-center gap-1.5">
-                  Cart
-                  {/* Use totalItemCount */}
-                  {totalItemCount > 0 && (
-                    <span 
-                      className="flex items-center justify-center w-5 h-5 
-                                 bg-gray-200 text-gray-800 text-xs 
-                                 dark:bg-gray-700 dark:text-gray-200 
-                                 font-bold rounded-full"
-                    >
-                      {totalItemCount}
-                    </span>
-                  )}
-                </div>
-              ) : (
-                <div className="text-center">{link.label}</div>
-              )}
+              {link.label === 'Cart' ? <CartLinkContent /> : link.label}
             </Link>
-            
           ))}
+          
+          {/* Conditional Admin Link (Mobile) */}
+          {isAuthenticated && (
+            <Link
+              to="/admin"
+              className="font-poppins font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 w-full p-3 rounded-lg text-center"
+              onClick={() => setOpen(false)}
+            >
+              Admin
+            </Link>
+          )}
+
+          {/* Auth Buttons (Mobile) */}
+          {isAuthenticated ? (
+            <button
+              onClick={() => {
+                dispatch(logout());
+                setOpen(false);
+              }}
+              className="font-poppins font-semibold text-red-600 dark:text-red-500 hover:bg-gray-100 dark:hover:bg-gray-800 w-full p-3 rounded-lg text-center"
+            >
+              Logout
+            </button>
+          ) : (
+            <Link
+              to="/login"
+              className="font-poppins font-semibold text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 w-full p-3 rounded-lg text-center"
+              onClick={() => setOpen(false)}
+            >
+              Login
+            </Link>
+          )}
         </div>
       </div>
     </nav>
