@@ -5,7 +5,6 @@ import Home from "./pages/Home";
 import Menu from "./pages/Menu";
 import Admin from "./pages/Admin";
 import Cart from "./pages/Cart";
-import Checkout from "./pages/CheckOut";
 import NotFound from "./pages/NotFound";
 import Contact from "./pages/Contact";
 import About from "./pages/About";
@@ -13,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Checkout from "./pages/Checkout";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -47,7 +47,7 @@ export default function App() {
               path="/checkout"
               element={
                 <ProtectedRoute>
-                  <Checkout />
+                 <Checkout/>
                 </ProtectedRoute>
               }
             />
