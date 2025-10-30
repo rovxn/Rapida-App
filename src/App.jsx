@@ -13,6 +13,10 @@ import { Navigate } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Checkout from "./pages/Checkout";
+import OrderList from "./pages/OrderList";
+import OrderDetails from "./pages/OrderDetails";
+import Profile from "./pages/Profile";
+import Wishlist from "./pages/Wishlist";
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated } = useSelector((state) => state.auth);
@@ -33,6 +37,7 @@ export default function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/about" element={<About />} />
+
 
             {/* Protected Pages */}
             <Route
@@ -59,6 +64,19 @@ export default function App() {
                 </ProtectedRoute>
               }
             />
+                        <Route path="/orders" element={<ProtectedRoute>
+                 <OrderList />
+                </ProtectedRoute>} />
+<Route path="/orders/:id" element={<ProtectedRoute>
+                 <OrderDetails />
+                </ProtectedRoute>} />
+<Route path="/profile" element={<ProtectedRoute>
+                 <Profile />
+                </ProtectedRoute>} />
+<Route path="/wishlist" element={<ProtectedRoute>
+                 <Wishlist />
+                </ProtectedRoute>} />
+
           </Routes>
         </main>
         <Footer />

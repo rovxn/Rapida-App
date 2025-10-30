@@ -4,83 +4,83 @@ export const products = [
     name: 'Margherita Pizza',
     price: 299,
     category: 'Pizza',
-    image: 'https://placehold.co/400x300/F7B538/333?text=Pizza', // Yellow bg, dark text
+    image: 'https://images.unsplash.com/photo-1601924582971-c9e8b3caa8b1?w=800&h=450&fit=crop&q=80',
   },
   {
     id: 2,
     name: 'Veg Burger',
     price: 149,
     category: 'Burger',
-    image: 'https://placehold.co/400x300/A3E635/333?text=Burger', // Lime bg, dark text
+    image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?w=800&h=450&fit=crop&q=80',
   },
   {
     id: 3,
     name: 'Pasta Alfredo',
     price: 249,
     category: 'Pasta',
-    image: 'https://placehold.co/400x300/FBCFE8/333?text=Pasta', // Pink bg, dark text
+    image: 'https://images.unsplash.com/photo-1617196034796-73dfa2d71c9d?w=800&h=450&fit=crop&q=80',
   },
   {
     id: 4,
     name: 'Caesar Salad',
     price: 199,
     category: 'Salad',
-    image: 'https://placehold.co/400x300/86EFAC/333?text=Salad', // Green bg, dark text
+    image: 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&h=450&fit=crop&q=80',
   },
   {
     id: 5,
     name: 'Pepperoni Pizza',
     price: 349,
     category: 'Pizza',
-    image: 'https://placehold.co/400x300/F7B538/333?text=Pizza',
+    image: 'https://images.unsplash.com/photo-1601924578370-3e25aa9b3d92?w=800&h=450&fit=crop&q=80',
   },
   {
     id: 6,
     name: 'Chicken Burger',
     price: 199,
     category: 'Burger',
-    image: 'https://placehold.co/400x300/A3E635/333?text=Burger',
+    image: 'https://images.unsplash.com/photo-1606755962773-0e6d1c35b9aa?w=800&h=450&fit=crop&q=80',
   },
   {
     id: 7,
     name: 'Pasta Arrabiata',
     price: 229,
     category: 'Pasta',
-    image: 'https://placehold.co/400x300/FBCFE8/333?text=Pasta',
+    image: 'https://images.unsplash.com/photo-1625944228743-1e8a7e62e8f4?w=800&h=450&fit=crop&q=80',
   },
   {
     id: 8,
     name: 'Greek Salad',
     price: 219,
     category: 'Salad',
-    image: 'https://placehold.co/400x300/86EFAC/333?text=Salad',
+    image: 'https://images.unsplash.com/photo-1605478506029-6c568dc6c7b3?w=800&h=450&fit=crop&q=80',
   },
   {
     id: 9,
     name: 'Cola',
     price: 59,
     category: 'Drink',
-    image: 'https://placehold.co/400x300/A5F3FC/333?text=Drink', // Cyan bg, dark text
+    image: 'https://images.unsplash.com/photo-1551022379-9b6c95f0e9b1?w=800&h=450&fit=crop&q=80',
   },
   {
     id: 10,
     name: 'Hawaiian Pizza',
     price: 329,
     category: 'Pizza',
-    image: 'https://placehold.co/400x300/F7B538/333?text=Pizza',
+    image: 'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?w=800&h=450&fit=crop&q=80',
   },
   {
     id: 11,
     name: 'French Fries',
     price: 129,
     category: 'Sides',
-    image: 'https://placehold.co/400x300/FDE68A/333?text=Sides', // Pale yellow bg
+    image: 'https://images.unsplash.com/photo-1586190848861-99aa4a171e90?w=800&h=450&fit=crop&q=80',
   },
   {
     id: 12,
     name: 'Iced Tea',
     price: 89,
     category: 'Drink',
-    image: 'https://placehold.co/400x300/A5F3FC/333?text=Drink',
+    image: 'https://images.unsplash.com/photo-1590080875831-a7a41e86ed32?w=800&h=450&fit=crop&q=80',
   },
 ];

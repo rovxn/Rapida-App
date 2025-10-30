@@ -1,122 +1,97 @@
 import { useSelector, useDispatch } from 'react-redux';
-import { clearCart } from '../store/cartSlice';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { addOrder } from '../store/ordersSlice';
+import { clearCart } from '../store/cartSlice';
+import { useNavigate } from 'react-router-dom';
 
 export default function Checkout() {
-  const cart = useSelector((state) => state.cart.items);
+  const cart = useSelector(state => state.cart.items);
+  const [address, setAddress] = useState('');
+  const savedAddresses = JSON.parse(localStorage.getItem('foodieAddresses')) || [];
+  const [newAddress, setNewAddress] = useState('');
   const dispatch = useDispatch();
-  const [orderPlaced, setOrderPlaced] = useState(false);
+  const navigate = useNavigate();
 
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-
-  // --- Reusable Themed Styles ---
-  const primaryButtonBase = 
-    `inline-block w-full bg-gray-900 text-white px-8 py-3 rounded-lg 
-     font-poppins font-semibold text-center
-     hover:bg-gray-700 shadow-lg hover:shadow-xl 
-     dark:bg-white dark:text-gray-900 dark:hover:bg-gray-200
-     transition-all duration-300 transform hover:-translate-y-0.5`;
-
-  const primaryButtonLink = `${primaryButtonBase} ${''}`; // For <Link>
-  const primaryButtonStyle = `${primaryButtonBase} ${''}`; // For <button>
-  // ---
-
-  const handleOrder = () => {
-    // No need to check cart.length, as the button won't render if cart is empty
-    setOrderPlaced(true);
+  const handlePlaceOrder = () => {
+    if (!address && !newAddress) return alert('Please select or enter an address');
+    const orderAddress = newAddress || address;
+    const total = cart.reduce((sum, i) => sum + i.price, 0);
+    dispatch(addOrder({ items: cart, address: orderAddress, total }));
     dispatch(clearCart());
+    alert('Order placed successfully!');
+    navigate('/orders');
   };
 
-  if (orderPlaced) {
-    return (
-      // --- ORDER PLACED (Success) STATE ---
-      <section className="bg-white dark:bg-gray-900 py-16 md:py-24">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-16">
-          <div className="text-center max-w-lg mx-auto">
-            <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 dark:text-gray-100 tracking-tight font-poppins mb-4">
-              🎉 Order Placed Successfully!
-            </h2>
-            <p className="font-poppins text-lg text-gray-600 dark:text-gray-300 mb-10">
-              Thank you for ordering with Rapida.
-            </p>
-            <Link to="/menu" className={primaryButtonLink}>
-              Back to Menu
-            </Link>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  const handleSaveAddress = () => {
+    if (!newAddress) return;
+    const updated = [...savedAddresses, newAddress];
+    localStorage.setItem('foodieAddresses', JSON.stringify(updated));
+    setNewAddress('');
+    alert('Address saved!');
+  };
 
   return (
-    // --- CHECKOUT PAGE ---
-    <section className="bg-white dark:bg-gray-900 py-16 md:py-24">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-16">
-        
-        <h2 className="text-3xl md:text-4xl font-extrabold text-gray-800 dark:text-gray-100 tracking-tight font-poppins text-center mb-16">
-          Checkout
-        </h2>
+    <div className="pt-24 max-w-3xl mx-auto p-4">
+      <h2 className="text-2xl font-semibold mb-4">Checkout</h2>
 
-        <div className="max-w-xl mx-auto">
-          {cart.length === 0 ? (
-            // --- EMPTY STATE ---
-            <div className="text-center">
-              <p className="font-poppins text-lg text-gray-500 dark:text-gray-400 mb-8">
-                You have no items in your cart to check out.
-              </p>
-              <Link to="/menu" className={primaryButtonLink}>
-                Browse Our Menu
-              </Link>
-            </div>
-          ) : (
-            // --- CHECKOUT SUMMARY ---
-            <>
-              {/* Order Summary Card */}
-              <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg overflow-hidden mb-8">
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white p-6 border-b border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-700/50 font-poppins">
-                  Order Summary
-                </h3>
-                <ul className="divide-y divide-gray-200 dark:divide-gray-700">
-                  {cart.map((item) => (
-                    <li
-                      key={item.id}
-                      className="flex justify-between items-center p-6 font-poppins"
-                    >
-                      <span className="text-gray-800 dark:text-gray-200">
-                        {item.name}{' '}
-                        <span className="text-gray-500 dark:text-gray-400">
-                          × {item.quantity}
-                        </span>
-                      </span>
-                      <span className="font-medium text-gray-900 dark:text-white">
-                        ₹{(item.price * item.quantity).toFixed(2)}
-                      </span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+      <div className="bg-white rounded-lg p-4 shadow-md mb-6">
+        <h3 className="font-medium mb-2">Select Delivery Address</h3>
+        {savedAddresses.length ? (
+          <div className="flex flex-col gap-2">
+            {savedAddresses.map((addr, i) => (
+              <label key={i} className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  name="address"
+                  value={addr}
+                  checked={address === addr}
+                  onChange={() => setAddress(addr)}
+                />
+                <span>{addr}</span>
+              </label>
+            ))}
+          </div>
+        ) : (
+          <p className="text-gray-400 text-sm">No saved addresses yet</p>
+        )}
 
-              {/* Total & Place Order Card */}
-              <div className="bg-gray-50 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl shadow-lg p-6">
-                <div className="flex justify-between items-center mb-6">
-                  <span className="font-poppins text-gray-600 dark:text-gray-400">Total Price:</span>
-                  <h3 className="font-poppins text-3xl font-extrabold text-gray-900 dark:text-white">
-                    ₹{total.toFixed(2)}
-                  </h3>
-                </div>
-                
-                <button
-                  onClick={handleOrder}
-                  className={primaryButtonStyle}
-                >
-                  Place Order
-                </button>
-              </div>
-            </>
-          )}
+        <div className="mt-4">
+          <input
+            type="text"
+            placeholder="Enter new address"
+            value={newAddress}
+            onChange={(e) => setNewAddress(e.target.value)}
+            className="border p-2 rounded w-full mb-2"
+          />
+          <button
+            onClick={handleSaveAddress}
+            className="bg-gray-900 text-white px-3 py-1 rounded"
+          >
+            Save Address
+          </button>
         </div>
       </div>
-    </section>
+
+      <div className="bg-white rounded-lg p-4 shadow-md">
+        <h3 className="font-medium mb-2">Order Summary</h3>
+        {cart.map((item) => (
+          <div key={item.id} className="flex justify-between py-2 border-b text-sm">
+            <span>{item.name}</span>
+            <span>₹{item.price}</span>
+          </div>
+        ))}
+        <div className="mt-3 font-semibold flex justify-between">
+          <span>Total</span>
+          <span>₹{cart.reduce((s, i) => s + i.price, 0)}</span>
+        </div>
+      </div>
+
+      <button
+        onClick={handlePlaceOrder}
+        className="mt-6 bg-peach-600 hover:bg-peach-700 text-white px-5 py-2 rounded-lg"
+      >
+        Place Order
+      </button>
+    </div>
   );
 }

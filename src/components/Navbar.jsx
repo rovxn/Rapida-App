@@ -63,11 +63,13 @@ export default function Navbar() {
     { to: '/cart', label: 'Cart' },
     { to: '/about', label: 'About' },
     { to: '/contact', label: 'Contact' },
+    { to: '/wishlist', label: 'Wishlist' },
+    { to: '/orders', label: 'My Orders' },
   ];
 
   // Helper for Cart Link content
   const CartLinkContent = () => (
-    <div className="flex items-center gap-1.5">
+    <div className="flex items-center justify-center gap-1.5">
       Cart
       {totalItemCount > 0 && (
         <span className="flex items-center justify-center w-5 h-5 bg-gray-900 text-white text-xs dark:bg-white dark:text-gray-900 font-bold rounded-full">
@@ -106,8 +108,8 @@ export default function Navbar() {
 
             {/* Conditional Admin Link */}
             {isAuthenticated && (
-              <Link to="/admin" className={themedLink}>
-                Admin
+              <Link to="/profile" className={themedLink}>
+                My Profile
                 <span className={underline}></span>
               </Link>
             )}
@@ -178,11 +180,11 @@ export default function Navbar() {
           {/* Conditional Admin Link (Mobile) */}
           {isAuthenticated && (
             <Link
-              to="/admin"
+              to="/profile"
               className="font-poppins font-medium text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 w-full p-3 rounded-lg text-center"
               onClick={() => setOpen(false)}
             >
-              Admin
+              My Profile
             </Link>
           )}
 
