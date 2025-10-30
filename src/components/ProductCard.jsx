@@ -2,25 +2,34 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, increaseQty, decreaseQty } from '../store/cartSlice';
 import { toggleWishlist } from '../store/wishlistSlice';
 import { FiHeart } from 'react-icons/fi';
-import { toast } from 'react-hot-toast'; // Make sure you're using react-hot-toast
+import { toast } from 'react-hot-toast';
+import { motion } from 'framer-motion';
+import { useState } from 'react';
 
 export default function ProductCard({ product, onEdit, onDelete }) {
   const dispatch = useDispatch();
+  const [added, setAdded] = useState(false); // ✅ Animation feedback for Add to Cart
 
-  // Get cart item to show quantity
+  // Cart quantity check
   const itemInCart = useSelector((state) =>
     state.cart.items.find((item) => item.id === product.id)
   );
   const quantity = itemInCart ? itemInCart.quantity : 0;
 
-  // ✅ Wishlist state
+  // Wishlist check
   const wishlist = useSelector((state) => state.wishlist.items);
   const isWishlisted = wishlist.some((item) => item.id === product.id);
 
   // --- Event Handlers ---
   const handleAdd = () => {
     dispatch(addToCart(product));
-    toast.success(`${product.name} added to cart!`);
+    toast.success(`${product.name} added to cart!`, {
+      style: { background: '#fef7f5', color: '#f06b3a' },
+    });
+
+    // Trigger quick animation feedback
+    setAdded(true);
+    setTimeout(() => setAdded(false), 400);
   };
 
   const handleIncrease = () => {
@@ -31,7 +40,6 @@ export default function ProductCard({ product, onEdit, onDelete }) {
     dispatch(decreaseQty(product.id));
   };
 
-  // ✅ Wishlist toggle
   const handleWishlist = () => {
     dispatch(toggleWishlist(product));
     toast.success(
@@ -56,15 +64,35 @@ export default function ProductCard({ product, onEdit, onDelete }) {
     dark:hover:bg-gray-200
     transition-all duration-300 transform`;
 
+  // --- Animation variants ---
+  const cardVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } },
+    hover: { scale: 1.03 },
+    tap: { scale: 0.97 },
+  };
+
   return (
-    <div
+    <motion.div
+      variants={cardVariants}
+      initial="hidden"
+      animate="visible"
+      whileHover="hover"
+      whileTap="tap"
       className="relative bg-white border border-gray-200 rounded-xl p-6 shadow-lg overflow-hidden
-                 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300 
-                 dark:bg-gray-800 dark:border-gray-700 flex flex-col justify-between"
+                 dark:bg-gray-800 dark:border-gray-700 flex flex-col justify-between
+                 hover:shadow-2xl hover:-translate-y-1 transition-all duration-300"
     >
       {/* ❤️ Wishlist Button */}
-      <button
+      <motion.button
         onClick={handleWishlist}
+        whileTap={{ scale: 0.8 }}
+        animate={
+          isWishlisted
+            ? { rotate: [0, 10, -10, 0], scale: [1, 1.3, 1] }
+            : {}
+        }
+        transition={{ duration: 0.3 }}
         className={`absolute top-4 right-4 p-2 rounded-full transition-colors ${
           isWishlisted
             ? 'bg-red-100 text-red-500 hover:bg-red-200'
@@ -75,10 +103,14 @@ export default function ProductCard({ product, onEdit, onDelete }) {
           size={18}
           className={isWishlisted ? 'fill-red-500' : 'fill-none'}
         />
-      </button>
+      </motion.button>
 
       {/* Product Info */}
-      <div>
+      <motion.div
+        initial={{ scale: 0.95 }}
+        animate={{ scale: 1 }}
+        transition={{ duration: 0.3 }}
+      >
         <img
           src={product.image}
           alt={product.name}
@@ -90,54 +122,69 @@ export default function ProductCard({ product, onEdit, onDelete }) {
         <p className="mt-2 font-poppins text-gray-600 dark:text-gray-400">
           ₹{product.price} • {product.category}
         </p>
-      </div>
+      </motion.div>
 
-      {/* Action Area */}
+      {/* --- Action Area --- */}
       <div className="mt-4">
         {onEdit && onDelete ? (
-          // Admin buttons
+          // --- Admin Buttons ---
           <div className="flex justify-end gap-4">
-            <button
+            <motion.button
+              whileHover={{ scale: 1.1 }}
               onClick={() => onEdit(product)}
               className="font-poppins text-sm font-semibold text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors"
             >
               Edit
-            </button>
-            <button
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.1 }}
               onClick={() => onDelete(product.id)}
               className="font-poppins text-sm font-semibold text-red-600 hover:text-red-800 dark:text-red-500 dark:hover:text-red-400 transition-colors"
             >
               Delete
-            </button>
+            </motion.button>
           </div>
         ) : quantity === 0 ? (
-          // Add to Cart
-          <button onClick={handleAdd} className={addButtonFull}>
-            Add to Cart
-          </button>
+          // --- Add to Cart Button ---
+          <motion.button
+            onClick={handleAdd}
+            className={addButtonFull}
+            animate={added ? { scale: [1, 1.2, 1] } : {}}
+            transition={{ duration: 0.4, type: 'spring' }}
+          >
+            {added ? 'Added!' : 'Add to Cart'}
+          </motion.button>
         ) : (
-          // Quantity Stepper
+          // --- Quantity Stepper ---
           <div className="flex items-center justify-between gap-2">
-            <button
+            <motion.button
               onClick={handleDecrease}
               className={qtyButtonStyle}
+              whileTap={{ scale: 0.8 }}
               aria-label="Decrease quantity"
             >
               −
-            </button>
-            <span className="font-poppins font-semibold text-lg text-gray-900 dark:text-white">
+            </motion.button>
+            <motion.span
+              key={quantity}
+              initial={{ scale: 0.8, opacity: 0 }}
+              animate={{ scale: 1, opacity: 1 }}
+              transition={{ type: 'spring', stiffness: 250, damping: 10 }}
+              className="font-poppins font-semibold text-lg text-gray-900 dark:text-white"
+            >
               {quantity}
-            </span>
-            <button
+            </motion.span>
+            <motion.button
               onClick={handleIncrease}
               className={qtyButtonStyle}
+              whileTap={{ scale: 1.2 }}
               aria-label="Increase quantity"
             >
               +
-            </button>
+            </motion.button>
           </div>
         )}
       </div>
-    </div>
+    </motion.div>
   );
 }
